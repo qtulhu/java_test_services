@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   order-receiver:
+    image: myregistry.example.com/order-receiver:latest
     build: ./order-receiver
     container_name: order-receiver
     ports:
@@ -12,6 +13,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=orders
       - SPRING_DATASOURCE_PASSWORD=orders
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
     depends_on:
       - orders-db
   order-generator:
@@ -23,6 +25,7 @@ services:
       - "8030:8030"
     networks:
       - orders-net
+
   orders-db:
     image: postgres:15
     container_name: orders-db
