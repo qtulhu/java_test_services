@@ -8,12 +8,12 @@ services:
     networks:
       - orders-net
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/orders
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://orders-db:5432/orders
       - SPRING_DATASOURCE_USERNAME=orders
       - SPRING_DATASOURCE_PASSWORD=orders
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:
-      - postgres
+      - orders-db
   order-generator:
     build: ./order-generator
     container_name: order-generator
@@ -23,16 +23,14 @@ services:
       - "8030:8030"
     networks:
       - orders-net
-  postgres:
+  orders-db:
     image: postgres:15
-    container_name: postgres
+    container_name: orders-db
     restart: always
     environment:
       POSTGRES_DB: orders
       POSTGRES_USER: orders
       POSTGRES_PASSWORD: orders
-    ports:
-      - "5432:5432"
     networks:
       - orders-net
     volumes:
