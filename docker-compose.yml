@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  order-receiver:
+    build: ./order-receiver
+    container_name: order-receiver
+    ports:
+      - "8025:8025"
+    networks:
+      - orders-net
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/orders
+      - SPRING_DATASOURCE_USERNAME=orders
+      - SPRING_DATASOURCE_PASSWORD=orders
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+  order-generator:
+    build: ./order-generator
+    container_name: order-generator
+    depends_on:
+      - order-receiver
+    ports:
+      - "8030:8030"
+    networks:
+      - orders-net
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: orders
+      POSTGRES_USER: orders
+      POSTGRES_PASSWORD: orders
+    ports:
+      - "5432:5432"
+    networks:
+      - orders-net
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+networks:
+  orders-net:
+    driver: bridge
+volumes:
+  pgdata:
