@@ -13,6 +13,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=orders
       - SPRING_DATASOURCE_PASSWORD=orders
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - DT_PROCESS_GROUP_NAME=order-receiver-pg
 
     depends_on:
       - orders-db
