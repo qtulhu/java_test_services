@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   order-receiver:
-    image: myregistry333.example.com/order-receiver:latest
+    image: myregistry444.example.com/order-receiver:latest
     build: ./order-receiver
     container_name: order-receiver
     ports:
