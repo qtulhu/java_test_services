@@ -16,6 +16,7 @@ services:
       - DT_PROCESS_GROUP_NAME=order-receiver-pg
       - DT_CLUSTER_ID=orders-demo
       - DT_CONTAINER_GROUP_NAME=orders-demo-group
+      - DT_TAGS=order-receiver
 
     depends_on:
       - orders-db
